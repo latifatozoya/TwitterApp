@@ -43,13 +43,13 @@ public class TimelineActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.miCompose:
-
                 launchComposeView();
-
                 return true;
+
             case R.id.miProfile:
                 //showProfileView();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -63,7 +63,13 @@ public class TimelineActivity extends AppCompatActivity {
             String name = data.getExtras().getString("name");
             int code = data.getExtras().getInt("code", 0);
             // Toast the name to display temporarily on screen
+            Tweet tweet = (Tweet) data.getSerializableExtra("tweet");
             Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+
+            tweets.add(0, tweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvTweets.scrollToPosition(0);
+
         }
     }
 
