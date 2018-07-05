@@ -25,6 +25,19 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
+    public TweetAdapter item;
+
+    public void clear() {
+        item.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Tweet> list) {
+        item.addAll(list);
+        notifyDataSetChanged();
+    }
+
     //pass in the tweets array in the constructor
     private List<Tweet> mTweets;
     Context context;
@@ -34,6 +47,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
     //for each row, inflate the layout and cache references into ViewHolder
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
         context = parent.getContext();
@@ -42,6 +56,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
         ViewHolder viewHolder = new ViewHolder(tweetView);
         return viewHolder;
+
     }
 
     //bind the values based on the position of the element
@@ -83,6 +98,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return mTweets.size();
+    }
+
+    public void addAll() {
     }
     //create ViewHolder class
 

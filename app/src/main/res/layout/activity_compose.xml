@@ -16,7 +16,8 @@
         android:layout_marginTop="26dp"
         android:ems="10"
         android:hint="Tweet something"
-        android:textColorHighlight="#88ef92"></EditText>
+        android:textColorHighlight="#88ef92">
+    </EditText>
 
     <Button
         android:id="@+id/button"
