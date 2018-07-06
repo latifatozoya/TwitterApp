@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
+    Button bt1;
     public TweetAdapter item;
 
     public void clear() {
@@ -128,9 +130,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
+            bt1 = (Button) itemView.findViewById(R.id.bt2);
             progressBar = itemView.findViewById(R.id.progressBar);
             Log.d("pb", ""+R.id.progressBar);
             itemView.setOnClickListener(this);
+            bt1.setOnClickListener(this);
         }
 
        public void onClick(View v) {
@@ -138,14 +142,22 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             int position = getAdapterPosition();
             // make sure the position is valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION) {
-                // get the movie at the position, this won't work if the class is static
-                Tweet tweet = mTweets.get(position);
-                // create intent for the new activity
-                Intent intent = new Intent(context, TweetDetailsActivity.class);
-                // serialize the movie using parceler, use its short name as a key
-                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
-                // show the activity
-                context.startActivity(intent);
+                if(v.getId() == R.id.bt2) {
+                    Tweet tweet = mTweets.get(position);
+                    Intent intent = new Intent(context, replyActivity.class);
+                    intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                    context.startActivity(intent);
+                }
+                else {
+                    // get the movie at the position, this won't work if the class is static
+                    Tweet tweet = mTweets.get(position);
+                    // create intent for the new activity
+                    Intent intent = new Intent(context, TweetDetailsActivity.class);
+                    // serialize the movie using parceler, use its short name as a key
+                    intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                    // show the activity
+                    context.startActivity(intent);
+                }
             }
         }
     }

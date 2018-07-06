@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -52,9 +53,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:layout_marginRight="8dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="8dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
         android:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/bt3"
+        android:layout_marginStart="73dp"
+        android:background="@drawable/ic_vector_messages_stroke" />
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/bt4"
+        android:layout_marginStart="162dp"
+        android:background="@drawable/ic_vector_retweet_stroke" />
+
+    <Button
+        android:id="@+id/bt4"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="98dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/ic_vector_heart_stroke" />
 
 </RelativeLayout>
