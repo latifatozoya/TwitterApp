@@ -61,9 +61,11 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+        Log.d("Tweet", "entered OnActivity");
+        if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE || requestCode == 10)) {
             // Extract name value from result extras
             String name = data.getExtras().getString("name");
+            Log.d("Tweet", "entered if statement");
             int code = data.getExtras().getInt("code", 0);
             // Toast the name to display temporarily on screen
             Tweet tweet = (Tweet) Parcels.unwrap(data.getParcelableExtra("tweet"));
@@ -116,11 +118,12 @@ public class TimelineActivity extends AppCompatActivity {
         //init the array list (data source)
         tweets = new ArrayList<>();
         //construct the adapter from this datasource
-        tweetAdapter = new TweetAdapter(tweets);
+        tweetAdapter = new TweetAdapter(this, tweets);
         //RecyclerView setup
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         //set the adapter
         rvTweets.setAdapter(tweetAdapter);
+
         populateTimeline();
 
         String username = getIntent().getStringExtra("username");

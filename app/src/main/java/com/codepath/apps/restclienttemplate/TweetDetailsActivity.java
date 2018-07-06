@@ -27,6 +27,8 @@ public class TweetDetailsActivity extends AppCompatActivity {
     TextView tvUserName;
     TextView tvBody;
     ImageView ivProfileImage;
+    private final int REQUEST_CODE = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), replyActivity.class);
                 intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
-                getApplicationContext().startActivity(intent);
+//                getApplicationContext().startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
+
             }
         });
         tvBody.setText(tweet.getbody());
@@ -63,5 +67,21 @@ public class TweetDetailsActivity extends AppCompatActivity {
                 .fitCenter()
                 .transform(new RoundedCornersTransformation(radius, margin))
                 .into(ivProfileImage);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        Log.d("Tweet", "entered OnActivity");
+        if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE || requestCode == 10)) {
+            // Extract name value from result extras
+            Intent intent = new Intent(TweetDetailsActivity.this, TimelineActivity.class);
+            intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+            startActivityForResult(intent, REQUEST_CODE);
+
+
+
+        }
     }
 }

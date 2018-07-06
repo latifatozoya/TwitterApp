@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -43,11 +44,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    private Activity activity;
     //pass in the tweets array in the constructor
     List<Tweet> mTweets;
     Context context;
 
-    public TweetAdapter(List<Tweet> tweets) {
+    public TweetAdapter(Activity activity, List<Tweet> tweets) {
+        this.activity = activity;
         mTweets = tweets;
     }
     //for each row, inflate the layout and cache references into ViewHolder
@@ -137,6 +140,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             bt1.setOnClickListener(this);
         }
 
+
+        private final int REQUEST_CODE = 10;
        public void onClick(View v) {
             // gets item position
             int position = getAdapterPosition();
@@ -144,9 +149,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             if (position != RecyclerView.NO_POSITION) {
                 if(v.getId() == R.id.bt2) {
                     Tweet tweet = mTweets.get(position);
-                    Intent intent = new Intent(context, replyActivity.class);
+                    Intent intent = new Intent(activity, replyActivity.class);
                     intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
-                    context.startActivity(intent);
+                    activity.startActivityForResult(intent, REQUEST_CODE);
                 }
                 else {
                     // get the movie at the position, this won't work if the class is static
