@@ -74,9 +74,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvName.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
         holder.tvDate.setText(ParseRelativeDate.getRelativeTimeAgo(tweet.createdAt));
+        holder.progressBar.setVisibility(View.VISIBLE);
         int radius = 30;
         int margin = 0;
-        //progressBar.setVisibility(View.VISIBLE); *******
+
         GlideApp.with(context)
                 .load(tweet.user.profileImageUrl)
                 .override(100, Target.SIZE_ORIGINAL)
