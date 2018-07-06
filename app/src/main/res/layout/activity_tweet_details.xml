@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TweetDetailsActivity">
+
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -16,45 +19,29 @@
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/tvName"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvName"
+        android:layout_marginStart="67dp"
         android:text="username" />
 
     <TextView
         android:id="@+id/tvBody"
-        android:layout_width="274dp"
-        android:layout_height="36dp"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivProfileImage"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="-23dp"
+        android:layout_marginTop="15dp"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Body" />
 
     <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="date" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
-
-    <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="67dp"
         android:text="@string/app_name" />
 
 </RelativeLayout>

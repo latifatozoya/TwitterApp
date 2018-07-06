@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.models.GlideApp;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
 
     //pass in the tweets array in the constructor
-    private List<Tweet> mTweets;
+    List<Tweet> mTweets;
     Context context;
 
     public TweetAdapter(List<Tweet> tweets) {
@@ -67,12 +70,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = mTweets.get(position);
 
         //populate the view according to this data
-        holder.tvUsername.setText(tweet.user.name);
+        holder.tvUsername.setText(tweet.user.screenName);
+        holder.tvName.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
         holder.tvDate.setText(ParseRelativeDate.getRelativeTimeAgo(tweet.createdAt));
         int radius = 30;
         int margin = 0;
-       // progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE); *******
         GlideApp.with(context)
                 .load(tweet.user.profileImageUrl)
                 .override(100, Target.SIZE_ORIGINAL)
@@ -104,9 +108,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
     //create ViewHolder class
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView ivProfileImage;
         public TextView tvUsername;
+        public TextView tvName;
         public TextView tvBody;
         public TextView tvDate;
         public ProgressBar progressBar;
@@ -119,10 +124,28 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
+            tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             progressBar = itemView.findViewById(R.id.progressBar);
             Log.d("pb", ""+R.id.progressBar);
+            itemView.setOnClickListener(this);
+        }
+
+       public void onClick(View v) {
+            // gets item position
+            int position = getAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                // get the movie at the position, this won't work if the class is static
+                Tweet tweet = mTweets.get(position);
+                // create intent for the new activity
+                Intent intent = new Intent(context, TweetDetailsActivity.class);
+                // serialize the movie using parceler, use its short name as a key
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                // show the activity
+                context.startActivity(intent);
+            }
         }
     }
 }
