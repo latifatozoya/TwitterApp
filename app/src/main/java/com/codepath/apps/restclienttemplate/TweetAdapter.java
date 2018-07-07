@@ -35,6 +35,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
     TwitterClient client;
+
     long fav, ret;
     Button bt1, bt, btn;
     public TweetAdapter item;
@@ -219,4 +220,5 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         }
     }
+
 }

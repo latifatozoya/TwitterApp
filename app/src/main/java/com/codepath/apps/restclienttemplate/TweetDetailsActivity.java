@@ -27,7 +27,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
     TwitterClient client;
     Tweet tweet;
-    Button bt2, btn;
+    Button bt2, btn,bt;
     TextView tvName;
     TextView tvUserName;
     TextView tvBody;
@@ -45,6 +45,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         bt2 = (Button) findViewById(R.id.bt2);
+        bt = (Button) findViewById(R.id.bt3);
         btn = (Button) findViewById(R.id.bt4);
         client= new TwitterClient(getApplicationContext());
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
@@ -62,6 +63,29 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        bt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                client.reTweet(tweet.uid, new JsonHttpResponseHandler() {
+
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        try {
+                            Tweet tweet = Tweet.fromJSON(response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        throwable.printStackTrace();
+                    }
+                });
+
+            }
+        });
+
 
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -113,4 +137,5 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
         }
     }
+
 }
