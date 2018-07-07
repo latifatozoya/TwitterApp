@@ -6,6 +6,7 @@ import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /*
@@ -59,13 +60,27 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, handler);
 	}
 
-	// in_reply_to_status_id
+	// favorites/create.json
 
 	public void replyTweet(String message, long id, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();
 		params.put("status", message);
 		params.put("in_reply_to_status_id", id);
+		client.post(apiUrl, params, handler);
+	}
+
+	public void reTweet(long ret, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/retweet/:id.json");
+		RequestParams params = new RequestParams();
+		params.put("id", ret);
+		client.post(apiUrl, params, handler);
+	}
+
+	public void favoriteTweet(long fav, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+		RequestParams params = new RequestParams();
+		params.put("id", fav);
 		client.post(apiUrl, params, handler);
 	}
 

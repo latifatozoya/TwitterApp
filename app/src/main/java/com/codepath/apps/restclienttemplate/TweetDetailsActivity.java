@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +13,21 @@ import android.widget.TextView;
 import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.models.GlideApp;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetDetailsActivity extends AppCompatActivity {
 
     //the tweet to display
 
+    TwitterClient client;
     Tweet tweet;
-    Button bt2;
+    Button bt2, btn;
     TextView tvName;
     TextView tvUserName;
     TextView tvBody;
@@ -40,7 +45,8 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         bt2 = (Button) findViewById(R.id.bt2);
-
+        btn = (Button) findViewById(R.id.bt4);
+        client= new TwitterClient(getApplicationContext());
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
         Log.d("TweetDetailsActivity", String.format("Showing details for '%s'", tweet.getClass()));
 
@@ -51,11 +57,36 @@ public class TweetDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), replyActivity.class);
                 intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
-//                getApplicationContext().startActivity(intent);
+                //getApplicationContext().startActivity(intent);
                 startActivityForResult(intent, REQUEST_CODE);
 
             }
         });
+
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(final View v) {
+                client.favoriteTweet(tweet.uid, new JsonHttpResponseHandler() {
+
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        try {
+                            Tweet tweet = Tweet.fromJSON(response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        v.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_vector_heart));
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        throwable.printStackTrace();
+                    }
+                });
+
+            }
+        });
+
+
         tvBody.setText(tweet.getbody());
         tvName.setText(tweet.getuser().name);
         tvUserName.setText(tweet.getuser().screenName);
@@ -79,8 +110,6 @@ public class TweetDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(TweetDetailsActivity.this, TimelineActivity.class);
             intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
             startActivityForResult(intent, REQUEST_CODE);
-
-
 
         }
     }
