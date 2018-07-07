@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.models.GlideApp;
@@ -26,6 +28,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     //the tweet to display
 
     TwitterClient client;
+    Context context;
     Tweet tweet;
     Button bt2, btn,bt;
     TextView tvName;
@@ -72,6 +75,8 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             Tweet tweet = Tweet.fromJSON(response);
+                            String name = "You've Retweeted this";
+                            Toast.makeText(context, name, Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

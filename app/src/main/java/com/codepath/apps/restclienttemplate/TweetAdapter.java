@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -174,6 +175,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
                                 Tweet tweet = Tweet.fromJSON(response);
+                                String name = "You've Retweeted this";
+                                Toast.makeText(context, name, Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
